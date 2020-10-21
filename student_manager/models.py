@@ -10,7 +10,7 @@ YEAR_CHOICES = [
 ]
 
 class Course(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=500, primary_key=False)
     code = models.CharField(max_length=10)
     description = models.TextField()
     
@@ -20,12 +20,16 @@ class Course(models.Model):
     
 
 class Subject(models.Model):
-    subject = models.CharField(max_length=250)
+    subject = models.CharField(max_length=250, 
+                               primary_key=True)
     subject_code = models.CharField(max_length=50)
-    subject_year = models.CharField(max_length=50, choices=YEAR_CHOICES, default="1st",)
+    subject_year = models.CharField(max_length=50, 
+                                    choices=YEAR_CHOICES, 
+                                    default="1st",)
     subject_unit = PositiveSmallIntegerField()
     subject_description = models.TextField()
-    subject_course = models.OneToOneField(Course,on_delete=models.CASCADE)
+    subject_course = models.OneToOneField(Course,
+                                          on_delete=models.CASCADE)
     
     def __str__(self):
         return self.subject_code
@@ -33,7 +37,7 @@ class Subject(models.Model):
 
 class Student(models.Model):
     firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100) 
     address = models.CharField(max_length=200)
     birthday = models.DateField(auto_now_add=False)
     student_course = models.OneToOneField(Course, on_delete=models.CASCADE)
